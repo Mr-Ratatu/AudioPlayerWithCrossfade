@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TestTaskFromDonteco</string>
+    <string name="select_audiofiles">Выберите аудиофайлы</string>
+    <string name="error_select_audiofiles">Ошибка выбора аудиофайла</string>
+    <string name="short_audiofile">Слишком короткий аудио файл</string>
+    <string name="first_file">Выбрать файл 1</string>
+    <string name="second_file">Выбрать файл 2</string>
+    <string name="file_is_selected">Файл выбран</string>
+</resources>
