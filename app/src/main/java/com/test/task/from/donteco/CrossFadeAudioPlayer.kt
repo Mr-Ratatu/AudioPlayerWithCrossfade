@@ -38,14 +38,13 @@ class CrossFadeAudioPlayer {
     }
 
     fun initializeMediaPlayers(audioFile: Uri, player: MediaPlayer?, context: Context) {
-        var audioPlayer = player
-        when (audioPlayer) {
-            null -> audioPlayer = MediaPlayer()
-            else -> audioPlayer.reset()
+        player?.apply {
+            stop()
+            reset()
         }
 
         try {
-            audioPlayer.apply {
+            player?.apply {
                 setAudioAttributes(
                     AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)

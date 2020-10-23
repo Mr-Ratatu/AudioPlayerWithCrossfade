@@ -6,7 +6,6 @@ import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -15,7 +14,6 @@ import com.test.task.from.donteco.Constants.Companion.CURRENT_FILE
 import com.test.task.from.donteco.Constants.Companion.MAX
 import com.test.task.from.donteco.Constants.Companion.MIN
 import com.test.task.from.donteco.Constants.Companion.NEXT_FILE
-import com.test.task.from.donteco.Constants.Companion.TAG
 import com.test.task.from.donteco.Constants.Companion.TOTAL
 import com.test.task.from.donteco.databinding.ActivityMainBinding
 
@@ -61,15 +59,12 @@ class MainActivity : AppCompatActivity() {
                         .show()
                     return
                 }
-                Log.d(TAG, "duration: $currentAudioFileDuration")
 
                 CrossFadeAudioPlayer().apply {
                     setCrossFade(crossFade)
                     startAudioPlayer(currentAudioPlayer, nextAudioPlayer)
-                    Log.d(TAG, "playAudioFile: success")
                 }
-                updateUiButton()
-                Toast.makeText(this, "crossFade: $crossFade", Toast.LENGTH_SHORT).show()
+                updateUi()
             }
             else ->
                 Toast.makeText(this, getString(R.string.select_audiofiles), Toast.LENGTH_SHORT)
@@ -88,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectAudioFile(requestCode: Int) {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*"
+        intent.type = "audio/*"
         startActivityForResult(intent, requestCode)
     }
 
@@ -98,7 +93,6 @@ class MainActivity : AppCompatActivity() {
             when (requestCode) {
                 CURRENT_FILE -> {
                     firstAudioFile = data?.data
-                    Log.d(TAG, "firstAudioFile: $firstAudioFile")
                     CrossFadeAudioPlayer().initializeMediaPlayers(
                         firstAudioFile,
                         currentAudioPlayer,
@@ -119,7 +113,6 @@ class MainActivity : AppCompatActivity() {
                     nextAudioFileDuration =
                         CrossFadeAudioPlayer().getDurationAudioFIle(secondAudioFile, this)
                     binding.secondFile.visibility = View.VISIBLE
-                    Log.d(TAG, "nextAudioFileDuration = $nextAudioFileDuration ")
                 }
             }
         } else {
@@ -128,12 +121,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUiButton() {
-        binding.apply {
-            lottieAnimationView.apply {
-                playAnimation()
-                repeatCount = LottieDrawable.INFINITE
-            }
+    private fun updateUi() {
+        binding.lottieAnimationView.apply {
+            playAnimation()
+            repeatCount = LottieDrawable.INFINITE
+
         }
     }
 
